@@ -133,6 +133,10 @@ const PhraseMakerAudio = {
 
             this.__playNote(pm, 0, 0);
         } else {
+            if (pm._playbackTimer) {
+                clearTimeout(pm._playbackTimer);
+                pm._playbackTimer = null;
+            }
             pm._stopOrCloseClicked = true;
             pm.widgetWindow.modifyButton(
                 0,
@@ -337,7 +341,7 @@ const PhraseMakerAudio = {
         let noteValue = pm._notesToPlay[noteCounter][1];
         time = 1 / noteValue;
 
-        setTimeout(
+        pm._playbackTimer = setTimeout(
             () => {
                 let row, cell, tupletCell;
                 // Did we just play the last note?
@@ -351,6 +355,7 @@ const PhraseMakerAudio = {
                         pm._("Play")
                     );
                     pm.playingNow = false;
+                    pm._playbackTimer = null;
                     pm._playButton.innerHTML = `&nbsp;&nbsp;<img 
                     src="header-icons/play-button.svg" 
                     title="${pm._("Play")}" 
