@@ -138,6 +138,7 @@ const PhraseMakerAudio = {
                 pm._playbackTimer = null;
             }
             pm._stopOrCloseClicked = true;
+            PhraseMakerUI.resetMatrix(pm);
             pm.widgetWindow.modifyButton(
                 0,
                 "play-button.svg",
